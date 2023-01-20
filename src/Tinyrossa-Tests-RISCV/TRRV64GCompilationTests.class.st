@@ -11,7 +11,7 @@ TRRV64GCompilationTests >> setUp [
 
 { #category : #'tests - examples' }
 TRRV64GCompilationTests >> test_example01_meaningOfLife [
-	| debugger |
+	| debugger status |
 
 	TRCompilationExamples new
 		compilation: compilation;
@@ -19,8 +19,10 @@ TRRV64GCompilationTests >> test_example01_meaningOfLife [
 
 	debugger := shell debugger.
 	debugger memoryAt: shell nzone put: compilation codeBuffer bytes.
-	debugger c.
+	status := debugger c.
+	self assert: (status isKindOf: DebugStopped).
 	self assert: (debugger getRegister: 'a0') equals: 42.
+	self assert: (debugger pc) equals: 0.
 ]
 
 { #category : #'tests - examples' }

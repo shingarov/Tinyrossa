@@ -14,6 +14,11 @@ Class {
 
 { #category : #accessing }
 TRCompilationTestShell class >> defaultImpl [
+
+"
+DefaultImpl := TRCompilationTestShellGem5
+"
+
 	DefaultImpl isNil ifTrue: [ ^ TRCompilationTestShellQEMU ].
 	^ DefaultImpl
 ]
@@ -55,12 +60,10 @@ TRCompilationTestShell >> reset [
 TRCompilationTestShell >> setUp [
 	| path |
 
-	path := (Smalltalk getPackageDirectoryForPackage: self class package).
-	self assert: path notNil.
-	path := path / '..' / '..' / 'shell'.
+	path := '/home/boris/work/Tinyrossa/shell' asFileReference.
 	self assert: path isDirectory.
 
-	binary := path / ('shell-' , (target name upTo: $-)).
+	binary := path / ('shell-' , 'riscv64').
 	self assert: binary isExecutable.
 ]
 
